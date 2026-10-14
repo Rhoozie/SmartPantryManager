@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="ingredient_units">
+        <item>pieces</item>
+        <item>grams</item>
+        <item>kilograms</item>
+        <item>millilitres</item>
+        <item>litres</item>
+        <item>cups</item>
+        <item>tablespoons</item>
+        <item>teaspoons</item>
+        <item>packets</item>
+        <item>cans</item>
+    </string-array>
+</resources>
