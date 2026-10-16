@@ -14,14 +14,6 @@ public class RecipeSeeder {
     public static void seedIfEmpty(PantryDatabaseHelper helper) {
         SQLiteDatabase db = helper.getWritableDatabase();
 
-        try (Cursor cursor = db.rawQuery(
-                "SELECT COUNT(*) FROM " + PantryDatabaseHelper.TABLE_RECIPES,
-                null)) {
-            if (cursor.moveToFirst() && cursor.getInt(0) > 0) {
-                return;
-            }
-        }
-
         db.beginTransaction();
         try {
             addRecipe(db, "Tomato Egg Scramble",
@@ -191,19 +183,7 @@ public class RecipeSeeder {
                 SQLiteDatabase.CONFLICT_IGNORE
         );
 
-        if (recipeId == -1) {
-            try (Cursor cursor = db.query(
-                    PantryDatabaseHelper.TABLE_RECIPES,
-                    new String[]{PantryDatabaseHelper.COL_RECIPE_ID},
-                    PantryDatabaseHelper.COL_RECIPE_NAME + "=?",
-                    new String[]{name},
-                    null, null, null)) {
-                if (cursor.moveToFirst()) {
-                    recipeId = cursor.getLong(0);
-                }
-            }
-        }
-
+        // If the recipe already exists, do not insert its ingredients again.
         if (recipeId == -1) {
             return;
         }
